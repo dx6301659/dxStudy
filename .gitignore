@@ -3,3 +3,11 @@
 ################################################################################
 
 /dxStudy/dxStudyBubbleSort/bin/Debug/net5.0
+/.vs
+/dxStudy/.vs/dxStudy
+/dxStudy/dxStudyBubbleSort/obj
+/dxStudy/dxStudyDataType/obj
+/dxStudy/dxStudyDataType/bin/Debug/net5.0
+/dxStudy/dxStudyOpenJson/obj
+/dxStudy/dxStudyOpenJson/bin/Debug/net5.0
+/dxStudy/dxStudyQuickSort/obj
