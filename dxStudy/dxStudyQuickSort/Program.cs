@@ -62,5 +62,32 @@ namespace dxStudyQuickSort
 
             return intRightIndex;
         }
+
+        static int QuickSortUnit2(int[] arrInt, int intLeftIndex, int intRightIndex)
+        {
+            int intTag = arrInt[intLeftIndex];
+
+            while (intLeftIndex < intRightIndex)
+            {
+                //from right to left
+                while (intLeftIndex < intRightIndex && arrInt[intRightIndex] > intTag)
+                    intRightIndex--;
+                (arrInt[intLeftIndex], arrInt[intRightIndex]) = (arrInt[intRightIndex], arrInt[intLeftIndex]);
+
+                //from left to right
+                while (intLeftIndex < intRightIndex && arrInt[intLeftIndex] < intTag)
+                    intLeftIndex++;
+                (arrInt[intLeftIndex], arrInt[intRightIndex]) = (arrInt[intRightIndex], arrInt[intLeftIndex]);
+            }
+            arrInt[intLeftIndex] = intTag;
+
+            foreach (int item in arrInt)
+            {
+                Console.Write($"{item}\t");
+            }
+            Console.WriteLine();
+
+            return intRightIndex;
+        }
     }
 }
