@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dxStudyDataType", "dxStudyDataType\dxStudyDataType.csproj", "{D1ECEB35-BCB4-4275-8F90-D1E04FC4B7D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyDataType", "dxStudyDataType\dxStudyDataType.csproj", "{D1ECEB35-BCB4-4275-8F90-D1E04FC4B7D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dxStudyOpenJson", "dxStudyOpenJson\dxStudyOpenJson.csproj", "{E1008EC8-8E5E-41DD-B779-6AAD4DBA5F31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyOpenJson", "dxStudyOpenJson\dxStudyOpenJson.csproj", "{E1008EC8-8E5E-41DD-B779-6AAD4DBA5F31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dxStudyBubbleSort", "dxStudyBubbleSort\dxStudyBubbleSort.csproj", "{9B379C16-CB7C-4A9B-8ED0-E03C1047E69C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyBubbleSort", "dxStudyBubbleSort\dxStudyBubbleSort.csproj", "{9B379C16-CB7C-4A9B-8ED0-E03C1047E69C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dxStudyQuickSort", "dxStudyQuickSort\dxStudyQuickSort.csproj", "{9D986AC2-21C9-4215-850B-8493EA7DE447}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyQuickSort", "dxStudyQuickSort\dxStudyQuickSort.csproj", "{9D986AC2-21C9-4215-850B-8493EA7DE447}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dxStudySelectSort", "dxStudySelectSort\dxStudySelectSort.csproj", "{4B3DE031-FC02-402F-AE89-C7B87CAF1C27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{9D986AC2-21C9-4215-850B-8493EA7DE447}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D986AC2-21C9-4215-850B-8493EA7DE447}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D986AC2-21C9-4215-850B-8493EA7DE447}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B3DE031-FC02-402F-AE89-C7B87CAF1C27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B3DE031-FC02-402F-AE89-C7B87CAF1C27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B3DE031-FC02-402F-AE89-C7B87CAF1C27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B3DE031-FC02-402F-AE89-C7B87CAF1C27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
