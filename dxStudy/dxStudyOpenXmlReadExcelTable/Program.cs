@@ -29,7 +29,7 @@ namespace dxStudyOpenXmlReadExcelTable
             if (string.IsNullOrWhiteSpace(strExcelFilePath) || string.IsNullOrWhiteSpace(strSheetName) || string.IsNullOrWhiteSpace(strTableName) || arrColumn == null || arrColumn.Length == 0)
                 return null;
 
-            using (var document = SpreadsheetDocument.CreateFromTemplate(strExcelFilePath))
+            using (var document = SpreadsheetDocument.Open(strExcelFilePath, false))
             {
                 var workbookPart = document.WorkbookPart;
                 var listSheet = workbookPart.Workbook.Descendants<Sheet>();

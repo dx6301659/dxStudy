@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace dxStudyOpenXmlExportExcelByTemplate
 {
@@ -14,154 +15,236 @@ namespace dxStudyOpenXmlExportExcelByTemplate
         static void Main(string[] args)
         {
             string strTemplatePath = @"../../../MockFile/123.xlsx";
-            string strSheetName = "dxTest";
+            string strSheetName = "BQ1-OT";
             string strSavePath = @"C:\Users\ding_\Desktop\dxTestOpenXml.xlsx";
-            var dataSet = CreateDataSet();
-            ExportDataSetToFileOneSheet(strTemplatePath, dataSet, true, strSheetName, strSavePath);
+            var dataTable = CreateDataTable();
+            var dicCellPositionValueMapping = new Dictionary<string, string>();
+            dicCellPositionValueMapping.Add("C3", "Dingxu, Test Scheme");
+            dicCellPositionValueMapping.Add("C8", "Test Scheme");
+            dicCellPositionValueMapping.Add("C9", "Test Organisation");
+            //bool blnResult = ExportDataTableToFileByTemplate(strTemplatePath, strSheetName, dataTable, 27, 1, dicCellPositionValueMapping, strSavePath);
+            ExportToFileByTemplate(strTemplatePath, strSheetName, dicCellPositionValueMapping, dataTable, 27, 1, strSavePath);
+
+            //if (blnResult)
+            //{
+            //    var dicCellPositionValueMapping = new Dictionary<string, string>();
+            //    dicCellPositionValueMapping.Add("C3", "Dingxu, Test Scheme");
+            //    dicCellPositionValueMapping.Add("C8", "Test Scheme");
+            //    dicCellPositionValueMapping.Add("C9", "Test Organisation");
+            //    blnResult = ChangeCellValue(strSavePath, strSheetName, dicCellPositionValueMapping);
+            //}
 
             Console.WriteLine("Hello World!");
         }
 
-        static void ExportDataSetToFileOneSheet(string strTemplatePath, DataSet dataSet, bool blnIsDisplayingDBColumn, string strSheetName, string strFileSavedPath)
+        static bool ExportDataTableToFileByTemplate(string strTemplatePath, string strSheetName, DataTable sourceDataTable, int intInputDataStartRowIndex, int intInputDataStartColumnIndex, Dictionary<string, string> dicCellPositionValueMapping, string strFileSavedPath)
         {
-            if (dataSet == null || dataSet.Tables.Count == 0 || string.IsNullOrWhiteSpace(strFileSavedPath))
-                return;
-
-            string strPath = Path.GetFullPath(strTemplatePath);
+            if (string.IsNullOrWhiteSpace(strTemplatePath) || sourceDataTable == null || sourceDataTable.Rows.Count == 0 || string.IsNullOrWhiteSpace(strSheetName) || string.IsNullOrWhiteSpace(strFileSavedPath))
+                return false;
 
             using (var document = SpreadsheetDocument.CreateFromTemplate(strTemplatePath))
             {
                 var workbookPart = document.WorkbookPart;
                 var workbook = workbookPart.Workbook;
-                //workbookPart.Workbook.Sheets = new Sheets();
+
+                var listSheet = workbook.Descendants<Sheet>();
+                var objSheet = listSheet.FirstOrDefault(item => strSheetName.Equals(item.Name, StringComparison.OrdinalIgnoreCase));
+                if (objSheet == null)
+                    return false;
+
+                var worksheetPart = workbookPart.GetPartById(objSheet.Id) as WorksheetPart;
+                var listRow = worksheetPart.Worksheet.Descendants<Row>();
+                if (listRow == null || listRow.Count() == 0)
+                    return false;
+
+                foreach (var item in dicCellPositionValueMapping)
+                {
+                    string strCellPosition = item.Key;
+                    if (string.IsNullOrWhiteSpace(strCellPosition))
+                        return false;
+
+                    string strRowIndex = Regex.Replace(strCellPosition, "[a-zA-Z]", "");
+                    var targetRow = listRow.FirstOrDefault(row => row.RowIndex.Value.ToString() == strRowIndex);
+                    if (targetRow == null)
+                        return false;
+
+                    var listCell = targetRow.Descendants<Cell>();
+                    if (listCell == null || listCell.Count() == 0)
+                        return false;
+
+                    var targetCell = listCell.FirstOrDefault(cell => string.Equals(strCellPosition, cell.CellReference, StringComparison.OrdinalIgnoreCase));
+                    if (targetCell == null)
+                        return false;
+
+                    targetCell.CellValue.Remove();
+                    targetCell.DataType = CellValues.String;
+                    targetCell.CellValue = new CellValue(item.Value);
+                }
+
+                var rowObj = listRow.FirstOrDefault(item => item.RowIndex == intInputDataStartRowIndex);
+                var cellObj = rowObj.GetFirstChild<Cell>();
+                var cellStyleIndex = cellObj.StyleIndex;
+                var sheetData = worksheetPart.Worksheet.GetFirstChild<SheetData>();
+                foreach (DataRow dataRow in sourceDataTable.Rows)
+                {
+                    var rowAdded = new Row();
+                    for (int i = 0; i < intInputDataStartColumnIndex; i++)
+                        rowAdded.AppendChild(new Cell());
+
+                    foreach (DataColumn dataColumn in sourceDataTable.Columns)
+                    {
+                        string strValue = dataRow[dataColumn.ColumnName] as string;
+                        var cell = new Cell();
+                        cell.DataType = CellValues.String;
+                        cell.CellValue = new CellValue(strValue);
+                        cell.StyleIndex = cellStyleIndex;
+                        rowAdded.AppendChild(cell);
+                    }
+
+                    sheetData.InsertBefore(rowAdded, rowObj);
+                }
+
+                document.SaveAs(strFileSavedPath);
+                document.Close();
+            }
+
+            return true;
+        }
+
+        static void ExportToFileByTemplate(string strTemplatePath, string strSheetName, Dictionary<string, string> dicCellPositionValueMapping, DataTable sourceDataTable, int intInputDataStartRowIndex, int intInputDataStartColumnIndex, string strFileSavedPath)
+        {
+            if (string.IsNullOrWhiteSpace(strTemplatePath) || string.IsNullOrWhiteSpace(strSheetName) || string.IsNullOrWhiteSpace(strFileSavedPath))
+                return;
+
+            using (var document = SpreadsheetDocument.CreateFromTemplate(strTemplatePath))
+            {
+                var workbookPart = document.WorkbookPart;
+                var workbook = workbookPart.Workbook;
 
                 var listSheet = workbook.Descendants<Sheet>();
                 var objSheet = listSheet.FirstOrDefault(item => strSheetName.Equals(item.Name, StringComparison.OrdinalIgnoreCase));
                 if (objSheet == null)
                     return;
 
+                var worksheetPart = workbookPart.GetPartById(objSheet.Id) as WorksheetPart;
+                var listRow = worksheetPart.Worksheet.Descendants<Row>();
+                if (listRow == null || listRow.Count() == 0)
+                    return;
 
+                bool blnResult = ChangeParticularCellValue(listRow, dicCellPositionValueMapping);
+                if (!blnResult)
+                    return;
 
-                //foreach (DataTable dataTable in dataSet.Tables)
-                //{
-                //    if (dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
-                //        continue;
-
-                //    var listColumnName = GetColumnsForDisplaying(dataTable.Columns, blnIsDisplayingDBColumn, sheetData);
-                //    foreach (DataRow dataRow in dataTable.Rows)
-                //    {
-                //        var row = new Row();
-                //        foreach (string column in listColumnName)
-                //        {
-                //            string strValue = dataRow[column].ToString();
-                //            var cell = new Cell();
-                //            cell.DataType = CellValues.String;
-                //            cell.CellValue = new CellValue(strValue);
-                //            row.AppendChild(cell);
-                //        }
-
-                //        sheetData.AppendChild(row);
-                //    }
-
-                //    var rowSpace = new Row();
-                //    sheetData.AppendChild(rowSpace);
-                //}
+                blnResult = ImportDataTable(worksheetPart, listRow, sourceDataTable, intInputDataStartRowIndex, intInputDataStartColumnIndex);
+                if (!blnResult)
+                    return;
 
                 document.SaveAs(strFileSavedPath);
+                document.Close();
             }
         }
 
-        static MemoryStream ExportDataSetToStreamOneSheet(DataSet dataSet, bool blnIsDisplayingDBColumn, string strSheetName)
+        static bool ChangeParticularCellValue(IEnumerable<Row> listRow, Dictionary<string, string> dicCellPositionValueMapping)
         {
-            if (dataSet == null || dataSet.Tables.Count == 0)
-                return null;
+            if (dicCellPositionValueMapping == null || dicCellPositionValueMapping.Count == 0)
+                return true;
 
-            var memoryStream = new MemoryStream();
-            using (var document = SpreadsheetDocument.Create(memoryStream, SpreadsheetDocumentType.Workbook))
+            foreach (var item in dicCellPositionValueMapping)
             {
-                var workbookPart = document.AddWorkbookPart();
-                workbookPart.Workbook = new Workbook();
-                workbookPart.Workbook.Sheets = new Sheets();
+                string strCellPosition = item.Key;
+                if (string.IsNullOrWhiteSpace(strCellPosition))
+                    return false;
 
-                var sheetPart = workbookPart.AddNewPart<WorksheetPart>();
-                var sheetData = new SheetData();
-                sheetPart.Worksheet = new Worksheet(sheetData);
-                string strRelationshipId = workbookPart.GetIdOfPart(sheetPart);
+                string strRowIndex = Regex.Replace(strCellPosition, "[a-zA-Z]", "");
+                var targetRow = listRow.FirstOrDefault(row => row.RowIndex.Value.ToString() == strRowIndex);
+                if (targetRow == null)
+                    continue;
 
-                uint uintMaxSheetId = 1;
-                var sheets = workbookPart.Workbook.GetFirstChild<Sheets>();
-                var listSheet = sheets.Elements<Sheet>();
-                if (listSheet.Count() > 0)
-                    uintMaxSheetId = listSheet.Max(s => s.SheetId.Value) + 1;
+                var listCell = targetRow.Descendants<Cell>();
+                if (listCell == null || listCell.Count() == 0)
+                    return false;
 
-                strSheetName = string.IsNullOrWhiteSpace(strSheetName) ? "Sheet1" : strSheetName;
-                var sheet = new Sheet() { Id = strRelationshipId, SheetId = uintMaxSheetId, Name = strSheetName };
-                sheets.Append(sheet);
+                var targetCell = listCell.FirstOrDefault(cell => string.Equals(strCellPosition, cell.CellReference, StringComparison.OrdinalIgnoreCase));
+                if (targetCell == null)
+                    continue;
 
-                foreach (DataTable dataTable in dataSet.Tables)
+                targetCell.CellValue.Remove();
+                targetCell.DataType = CellValues.String;
+                targetCell.CellValue = new CellValue(item.Value);
+            }
+
+            return true;
+        }
+
+        static bool ImportDataTable(WorksheetPart worksheetPart, IEnumerable<Row> listRow, DataTable sourceDataTable, int intInputDataStartRowIndex, int intInputDataStartColumnIndex)
+        {
+            if (sourceDataTable == null || sourceDataTable.Rows.Count == 0)
+                return true;
+
+            var rowObj = listRow.FirstOrDefault(item => item.RowIndex == intInputDataStartRowIndex);
+            if (rowObj == null)
+                return false;
+
+            var cellObj = rowObj.GetFirstChild<Cell>();
+            var cellStyleIndex = cellObj.StyleIndex;
+            var sheetData = worksheetPart.Worksheet.GetFirstChild<SheetData>();
+            foreach (DataRow dataRow in sourceDataTable.Rows)
+            {
+                var rowAdded = new Row();
+                for (int i = 0; i < intInputDataStartColumnIndex; i++)
+                    rowAdded.AppendChild(new Cell());
+
+                foreach (DataColumn dataColumn in sourceDataTable.Columns)
                 {
-                    if (dataTable.Rows.Count == 0 || dataTable.Columns.Count == 0)
-                        continue;
-
-                    var listColumnName = GetColumnsForDisplaying(dataTable.Columns, blnIsDisplayingDBColumn, sheetData);
-                    foreach (DataRow dataRow in dataTable.Rows)
-                    {
-                        var row = new Row();
-                        foreach (string column in listColumnName)
-                        {
-                            string strValue = dataRow[column].ToString();
-                            var cell = new Cell();
-                            cell.DataType = CellValues.String;
-                            cell.CellValue = new CellValue(strValue);
-                            row.AppendChild(cell);
-                        }
-
-                        sheetData.AppendChild(row);
-                    }
-
-                    var rowSpace = new Row();
-                    sheetData.AppendChild(rowSpace);
+                    string strValue = dataRow[dataColumn.ColumnName] as string;
+                    var cell = new Cell();
+                    cell.DataType = CellValues.String;
+                    cell.CellValue = new CellValue(strValue);
+                    cell.StyleIndex = cellStyleIndex;
+                    rowAdded.AppendChild(cell);
                 }
+
+                sheetData.InsertBefore(rowAdded, rowObj);
             }
 
-            return memoryStream;
+            return true;
         }
 
-        static List<string> GetColumnsForDisplaying(DataColumnCollection dataColumnCollection, bool blnIsDisplayingDBColumn, SheetData sheetData)
+        static DataTable CreateDataTable()
         {
-            var listColumnName = new List<string>();
-            if (!blnIsDisplayingDBColumn)
-            {
-                foreach (DataColumn column in dataColumnCollection)
-                    listColumnName.Add(column.ColumnName);
+            var dataTable2 = new DataTable();
+            var dataColumn2_1 = new DataColumn("Nric");
+            var dataColumn2_2 = new DataColumn("Age");
+            var dataColumn2_3 = new DataColumn("Address");
+            dataTable2.Columns.Add(dataColumn2_1);
+            dataTable2.Columns.Add(dataColumn2_2);
+            dataTable2.Columns.Add(dataColumn2_3);
 
-                return listColumnName;
-            }
+            var dataRow2_1 = dataTable2.NewRow();
+            dataRow2_1["Nric"] = "dxTestNric1";
+            dataRow2_1["Age"] = "dxTestAge1";
+            dataRow2_1["Address"] = "dxTestAddress1";
+            dataTable2.Rows.Add(dataRow2_1);
 
-            var headerRow = new Row();
-            foreach (DataColumn column in dataColumnCollection)
-            {
-                string strColumnName = column.ColumnName;
-                listColumnName.Add(strColumnName);
+            var dataRow2_2 = dataTable2.NewRow();
+            dataRow2_2["Nric"] = "dxTestNric2";
+            dataRow2_2["Age"] = "dxTestAge2";
+            dataRow2_2["Address"] = "dxTestAddress2";
+            dataTable2.Rows.Add(dataRow2_2);
 
-                var cell = new Cell();
-                cell.DataType = CellValues.String;
-                cell.CellValue = new CellValue(strColumnName);
-                cell.StyleIndex = 5U;
-                headerRow.AppendChild(cell);
-            }
-            sheetData.AppendChild(headerRow);
+            var dataRow2_3 = dataTable2.NewRow();
+            dataRow2_3["Nric"] = "dxTestNric3";
+            dataRow2_3["Age"] = "dxTestAge3";
+            dataRow2_3["Address"] = "dxTestAddress3";
+            dataTable2.Rows.Add(dataRow2_3);
 
-            return listColumnName;
-        }
+            var dataRow2_4 = dataTable2.NewRow();
+            dataRow2_4["Nric"] = "dxTestNric4";
+            dataRow2_4["Age"] = "dxTestAge4";
+            dataRow2_4["Address"] = "dxTestAddress4";
+            dataTable2.Rows.Add(dataRow2_4);
 
-        static DataSet CreateDataSet()
-        {
-            var dataTable = new DataTable();
-            var dataSet = new DataSet();
-            dataSet.Tables.Add(dataTable);
-
-            return dataSet;
+            return dataTable2;
         }
     }
 }
