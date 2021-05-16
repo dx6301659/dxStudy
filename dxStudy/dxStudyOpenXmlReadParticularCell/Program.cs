@@ -24,7 +24,7 @@ namespace dxStudyOpenXmlReadParticularCell
                 dicFieldPositionMapping.Add(arrMapping[0], arrMapping[1]);
             }
 
-            bool blnResult = CheckCellsPositionValueMapping(strFilePath, strSheetName, dicFieldPositionMapping);
+            //bool blnResult = CheckCellsPositionValueMapping(strFilePath, strSheetName, dicFieldPositionMapping);
 
             //string strHeaderFieldNameValuePositionMapping = "Scheme Scope:B2,Organisation Scope:B3,MTC Type:B4,MT Date From:B5,MT Date To:B6,Means Tested As:B7";
             string strHeaderFieldNameValuePositionMapping = "MT Date From:B5";
@@ -36,136 +36,136 @@ namespace dxStudyOpenXmlReadParticularCell
                 dicFieldValuePositionMapping.Add(arrMapping[0], arrMapping[1]);
             }
 
-            var dicResult = ReadParticularCellsFromExcelSheet(strFilePath, strSheetName, dicFieldValuePositionMapping);
+            //var dicResult = ReadParticularCellsFromExcelSheet(strFilePath, strSheetName, dicFieldValuePositionMapping);
 
 
             Console.WriteLine("Hello World!");
         }
 
-        /// <summary>
-        /// Check if the position and value of the cell is same as the items in the dictionary
-        /// dictionary key : cell position
-        /// dictionary value : cell value
-        /// </summary>
-        static bool CheckCellsPositionValueMapping(string strExcelFilePath, string strSheetName, Dictionary<string, string> dicCellPositionValueMapping)
-        {
-            if (string.IsNullOrWhiteSpace(strExcelFilePath) || string.IsNullOrWhiteSpace(strSheetName) || dicCellPositionValueMapping == null || dicCellPositionValueMapping.Count == 0)
-                return false;
+        ///// <summary>
+        ///// Check if the position and value of the cell is same as the items in the dictionary
+        ///// dictionary key : cell position
+        ///// dictionary value : cell value
+        ///// </summary>
+        //static bool CheckCellsPositionValueMapping(string strExcelFilePath, string strSheetName, Dictionary<string, string> dicCellPositionValueMapping)
+        //{
+        //    if (string.IsNullOrWhiteSpace(strExcelFilePath) || string.IsNullOrWhiteSpace(strSheetName) || dicCellPositionValueMapping == null || dicCellPositionValueMapping.Count == 0)
+        //        return false;
 
-            using (var document = SpreadsheetDocument.Open(strExcelFilePath, false))
-            {
-                var workbookPart = document.WorkbookPart;
-                var workbook = workbookPart.Workbook;
+        //    using (var document = SpreadsheetDocument.Open(strExcelFilePath, false))
+        //    {
+        //        var workbookPart = document.WorkbookPart;
+        //        var workbook = workbookPart.Workbook;
 
-                var listSheet = workbook.Descendants<Sheet>();
-                var objSheet = listSheet.FirstOrDefault(item => strSheetName.Equals(item.Name, StringComparison.OrdinalIgnoreCase));
-                if (objSheet == null)
-                    return false;
+        //        var listSheet = workbook.Descendants<Sheet>();
+        //        var objSheet = listSheet.FirstOrDefault(item => strSheetName.Equals(item.Name, StringComparison.OrdinalIgnoreCase));
+        //        if (objSheet == null)
+        //            return false;
 
-                var worksheetPart = workbookPart.GetPartById(objSheet.Id) as WorksheetPart;
-                var listRow = worksheetPart.Worksheet.Descendants<Row>();
-                if (listRow == null || listRow.Count() == 0)
-                    return false;
+        //        var worksheetPart = workbookPart.GetPartById(objSheet.Id) as WorksheetPart;
+        //        var listRow = worksheetPart.Worksheet.Descendants<Row>();
+        //        if (listRow == null || listRow.Count() == 0)
+        //            return false;
 
-                var sharedStringTable = workbookPart.SharedStringTablePart.SharedStringTable;
-                foreach (var item in dicCellPositionValueMapping)
-                {
-                    string strFieldPosition = item.Key;
-                    string strFieldName = item.Value;
+        //        var sharedStringTable = workbookPart.SharedStringTablePart.SharedStringTable;
+        //        foreach (var item in dicCellPositionValueMapping)
+        //        {
+        //            string strFieldPosition = item.Key;
+        //            string strFieldName = item.Value;
 
-                    string strRowIndex = Regex.Replace(item.Key, "[a-zA-Z]", "");
-                    var targetRow = listRow.FirstOrDefault(row => row.RowIndex.Value.ToString() == strRowIndex);
-                    if (targetRow == null)
-                        return false;
+        //            string strRowIndex = Regex.Replace(item.Key, "[a-zA-Z]", "");
+        //            var targetRow = listRow.FirstOrDefault(row => row.RowIndex.Value.ToString() == strRowIndex);
+        //            if (targetRow == null)
+        //                return false;
 
-                    var listCell = targetRow.Descendants<Cell>();
-                    if (listCell == null || listCell.Count() == 0)
-                        return false;
+        //            var listCell = targetRow.Descendants<Cell>();
+        //            if (listCell == null || listCell.Count() == 0)
+        //                return false;
 
-                    var targetCell = listCell.FirstOrDefault(cell => string.Equals(strFieldPosition, cell.CellReference, StringComparison.OrdinalIgnoreCase));
-                    if (targetCell == null)
-                        return false;
+        //            var targetCell = listCell.FirstOrDefault(cell => string.Equals(strFieldPosition, cell.CellReference, StringComparison.OrdinalIgnoreCase));
+        //            if (targetCell == null)
+        //                return false;
 
-                    string strCurrentCellValue = GetCellValue(sharedStringTable, targetCell);
-                    if (!string.Equals(strFieldName, strCurrentCellValue, StringComparison.OrdinalIgnoreCase))
-                        return false;
-                }
+        //            string strCurrentCellValue = GetCellValue(sharedStringTable, targetCell);
+        //            if (!string.Equals(strFieldName, strCurrentCellValue, StringComparison.OrdinalIgnoreCase))
+        //                return false;
+        //        }
 
-                return true;
-            }
-        }
+        //        return true;
+        //    }
+        //}
 
-        /// <summary>
-        /// Get the particular cell value by position in the dictionary
-        /// dictionary key : related value, use it to be key for the returned dictionary
-        /// dictionary value : cell position
-        /// </summary>
-        static Dictionary<string, string> ReadParticularCellsFromExcelSheet(string strExcelFilePath, string strSheetName, Dictionary<string, string> dicValuePositionMapping)
-        {
-            if (string.IsNullOrWhiteSpace(strExcelFilePath) || string.IsNullOrWhiteSpace(strSheetName))
-                return null;
+        ///// <summary>
+        ///// Get the particular cell value by position in the dictionary
+        ///// dictionary key : related value, use it to be key for the returned dictionary
+        ///// dictionary value : cell position
+        ///// </summary>
+        //static Dictionary<string, string> ReadParticularCellsFromExcelSheet(string strExcelFilePath, string strSheetName, Dictionary<string, string> dicValuePositionMapping)
+        //{
+        //    if (string.IsNullOrWhiteSpace(strExcelFilePath) || string.IsNullOrWhiteSpace(strSheetName))
+        //        return null;
 
-            using (var document = SpreadsheetDocument.Open(strExcelFilePath, false))
-            {
-                var workbookPart = document.WorkbookPart;
-                var workbook = workbookPart.Workbook;
+        //    using (var document = SpreadsheetDocument.Open(strExcelFilePath, false))
+        //    {
+        //        var workbookPart = document.WorkbookPart;
+        //        var workbook = workbookPart.Workbook;
 
-                var listSheet = workbook.Descendants<Sheet>();
-                var objSheet = listSheet.FirstOrDefault(item => strSheetName.Equals(item.Name, StringComparison.OrdinalIgnoreCase));
-                if (objSheet == null)
-                    return null;
+        //        var listSheet = workbook.Descendants<Sheet>();
+        //        var objSheet = listSheet.FirstOrDefault(item => strSheetName.Equals(item.Name, StringComparison.OrdinalIgnoreCase));
+        //        if (objSheet == null)
+        //            return null;
 
-                var worksheetPart = workbookPart.GetPartById(objSheet.Id) as WorksheetPart;
-                var listRow = worksheetPart.Worksheet.Descendants<Row>();
-                if (listRow == null || listRow.Count() == 0)
-                    return null;
+        //        var worksheetPart = workbookPart.GetPartById(objSheet.Id) as WorksheetPart;
+        //        var listRow = worksheetPart.Worksheet.Descendants<Row>();
+        //        if (listRow == null || listRow.Count() == 0)
+        //            return null;
 
-                var sharedStringTable = workbookPart.SharedStringTablePart.SharedStringTable;
-                var dicResult = new Dictionary<string, string>();
-                foreach (var item in dicValuePositionMapping)
-                {
-                    string strCellPosition = item.Value;
-                    if (string.IsNullOrWhiteSpace(strCellPosition))
-                        return null;
+        //        var sharedStringTable = workbookPart.SharedStringTablePart.SharedStringTable;
+        //        var dicResult = new Dictionary<string, string>();
+        //        foreach (var item in dicValuePositionMapping)
+        //        {
+        //            string strCellPosition = item.Value;
+        //            if (string.IsNullOrWhiteSpace(strCellPosition))
+        //                return null;
 
-                    string strRowIndex = Regex.Replace(strCellPosition, "[a-zA-Z]", "");
-                    var targetRow = listRow.FirstOrDefault(row => row.RowIndex.Value.ToString() == strRowIndex);
-                    if (targetRow == null)
-                        return null;
+        //            string strRowIndex = Regex.Replace(strCellPosition, "[a-zA-Z]", "");
+        //            var targetRow = listRow.FirstOrDefault(row => row.RowIndex.Value.ToString() == strRowIndex);
+        //            if (targetRow == null)
+        //                return null;
 
-                    var listCell = targetRow.Descendants<Cell>();
-                    if (listCell == null || listCell.Count() == 0)
-                        return null;
+        //            var listCell = targetRow.Descendants<Cell>();
+        //            if (listCell == null || listCell.Count() == 0)
+        //                return null;
 
-                    var targetCell = listCell.FirstOrDefault(cell => string.Equals(strCellPosition, cell.CellReference, StringComparison.OrdinalIgnoreCase));
-                    if (targetCell == null)
-                        return null;
+        //            var targetCell = listCell.FirstOrDefault(cell => string.Equals(strCellPosition, cell.CellReference, StringComparison.OrdinalIgnoreCase));
+        //            if (targetCell == null)
+        //                return null;
 
-                    string strCurrentCellValue = GetCellValue(sharedStringTable, targetCell);
-                    dicResult.Add(item.Key, strCurrentCellValue);
-                }
+        //            string strCurrentCellValue = GetCellValue(sharedStringTable, targetCell);
+        //            dicResult.Add(item.Key, strCurrentCellValue);
+        //        }
 
-                return dicResult;
-            }
-        }
+        //        return dicResult;
+        //    }
+        //}
 
-        static string GetCellValue(SharedStringTable sharedStringTable, Cell cell)
-        {
-            string strValue = cell.CellValue == null ? null : cell.CellValue.InnerXml ?? null;
-            if (string.IsNullOrWhiteSpace(strValue))
-                return null;
+        //static string GetCellValue(SharedStringTable sharedStringTable, Cell cell)
+        //{
+        //    string strValue = cell.CellValue == null ? null : cell.CellValue.InnerXml ?? null;
+        //    if (string.IsNullOrWhiteSpace(strValue))
+        //        return null;
 
-            if (cell.DataType != null && cell.DataType.Value == CellValues.SharedString)
-            {
-                string strResult = sharedStringTable.ChildElements[int.Parse(strValue)].InnerText;
-                return !string.IsNullOrWhiteSpace(strResult) ? strResult.Trim() : strResult;
-            }
+        //    if (cell.DataType != null && cell.DataType.Value == CellValues.SharedString)
+        //    {
+        //        string strResult = sharedStringTable.ChildElements[int.Parse(strValue)].InnerText;
+        //        return !string.IsNullOrWhiteSpace(strResult) ? strResult.Trim() : strResult;
+        //    }
 
-            double d = 0;
-            if (double.TryParse(cell.CellValue?.Text, out d))
-                return d.ToString();
+        //    double d = 0;
+        //    if (double.TryParse(cell.CellValue?.Text, out d))
+        //        return d.ToString();
 
-            return !string.IsNullOrWhiteSpace(strValue) ? strValue.Trim() : strValue;
-        }
+        //    return !string.IsNullOrWhiteSpace(strValue) ? strValue.Trim() : strValue;
+        //}
     }
 }

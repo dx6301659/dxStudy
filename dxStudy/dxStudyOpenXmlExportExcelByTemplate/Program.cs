@@ -48,226 +48,226 @@ namespace dxStudyOpenXmlExportExcelByTemplate
             dicCellPositionValueMapping.Add("C5", DateTime.Now.ToString("yyyy-MM-dd"));
             var testClass = new TestClass();
             var dtResult = testClass.GetOutputRecordData();
-            TestGenerateFileByStreamAndZipIt(strTemplatePath, strSheetName, dicCellPositionValueMapping, dtResult, 20, 2, strSavePath);
+            //TestGenerateFileByStreamAndZipIt(strTemplatePath, strSheetName, dicCellPositionValueMapping, dtResult, 20, 2, strSavePath);
 
             Console.WriteLine("Hello World!");
         }
 
-        static bool ExportDataTableToFileByTemplate(string strTemplatePath, string strSheetName, DataTable sourceDataTable, int intInputDataStartRowIndex, int intInputDataStartColumnIndex, Dictionary<string, string> dicCellPositionValueMapping, string strFileSavedPath)
-        {
-            if (string.IsNullOrWhiteSpace(strTemplatePath) || sourceDataTable == null || sourceDataTable.Rows.Count == 0 || string.IsNullOrWhiteSpace(strSheetName) || string.IsNullOrWhiteSpace(strFileSavedPath))
-                return false;
+        //static bool ExportDataTableToFileByTemplate(string strTemplatePath, string strSheetName, DataTable sourceDataTable, int intInputDataStartRowIndex, int intInputDataStartColumnIndex, Dictionary<string, string> dicCellPositionValueMapping, string strFileSavedPath)
+        //{
+        //    if (string.IsNullOrWhiteSpace(strTemplatePath) || sourceDataTable == null || sourceDataTable.Rows.Count == 0 || string.IsNullOrWhiteSpace(strSheetName) || string.IsNullOrWhiteSpace(strFileSavedPath))
+        //        return false;
 
-            using (var document = SpreadsheetDocument.CreateFromTemplate(strTemplatePath))
-            {
-                var workbookPart = document.WorkbookPart;
-                var workbook = workbookPart.Workbook;
+        //    using (var document = SpreadsheetDocument.CreateFromTemplate(strTemplatePath))
+        //    {
+        //        var workbookPart = document.WorkbookPart;
+        //        var workbook = workbookPart.Workbook;
 
-                var listSheet = workbook.Descendants<Sheet>();
-                var objSheet = listSheet.FirstOrDefault(item => strSheetName.Equals(item.Name, StringComparison.OrdinalIgnoreCase));
-                if (objSheet == null)
-                    return false;
+        //        var listSheet = workbook.Descendants<Sheet>();
+        //        var objSheet = listSheet.FirstOrDefault(item => strSheetName.Equals(item.Name, StringComparison.OrdinalIgnoreCase));
+        //        if (objSheet == null)
+        //            return false;
 
-                var worksheetPart = workbookPart.GetPartById(objSheet.Id) as WorksheetPart;
-                var listRow = worksheetPart.Worksheet.Descendants<Row>();
-                if (listRow == null || listRow.Count() == 0)
-                    return false;
+        //        var worksheetPart = workbookPart.GetPartById(objSheet.Id) as WorksheetPart;
+        //        var listRow = worksheetPart.Worksheet.Descendants<Row>();
+        //        if (listRow == null || listRow.Count() == 0)
+        //            return false;
 
-                foreach (var item in dicCellPositionValueMapping)
-                {
-                    string strCellPosition = item.Key;
-                    if (string.IsNullOrWhiteSpace(strCellPosition))
-                        return false;
+        //        foreach (var item in dicCellPositionValueMapping)
+        //        {
+        //            string strCellPosition = item.Key;
+        //            if (string.IsNullOrWhiteSpace(strCellPosition))
+        //                return false;
 
-                    string strRowIndex = Regex.Replace(strCellPosition, "[a-zA-Z]", "");
-                    var targetRow = listRow.FirstOrDefault(row => row.RowIndex.Value.ToString() == strRowIndex);
-                    if (targetRow == null)
-                        return false;
+        //            string strRowIndex = Regex.Replace(strCellPosition, "[a-zA-Z]", "");
+        //            var targetRow = listRow.FirstOrDefault(row => row.RowIndex.Value.ToString() == strRowIndex);
+        //            if (targetRow == null)
+        //                return false;
 
-                    var listCell = targetRow.Descendants<Cell>();
-                    if (listCell == null || listCell.Count() == 0)
-                        return false;
+        //            var listCell = targetRow.Descendants<Cell>();
+        //            if (listCell == null || listCell.Count() == 0)
+        //                return false;
 
-                    var targetCell = listCell.FirstOrDefault(cell => string.Equals(strCellPosition, cell.CellReference, StringComparison.OrdinalIgnoreCase));
-                    if (targetCell == null)
-                        return false;
+        //            var targetCell = listCell.FirstOrDefault(cell => string.Equals(strCellPosition, cell.CellReference, StringComparison.OrdinalIgnoreCase));
+        //            if (targetCell == null)
+        //                return false;
 
-                    targetCell.CellValue.Remove();
-                    targetCell.DataType = CellValues.String;
-                    targetCell.CellValue = new CellValue(item.Value);
-                }
+        //            targetCell.CellValue.Remove();
+        //            targetCell.DataType = CellValues.String;
+        //            targetCell.CellValue = new CellValue(item.Value);
+        //        }
 
-                var rowObj = listRow.FirstOrDefault(item => item.RowIndex == intInputDataStartRowIndex);
-                var cellObj = rowObj.GetFirstChild<Cell>();
-                var cellStyleIndex = cellObj.StyleIndex;
-                var sheetData = worksheetPart.Worksheet.GetFirstChild<SheetData>();
-                foreach (DataRow dataRow in sourceDataTable.Rows)
-                {
-                    var rowAdded = new Row();
-                    for (int i = 0; i < intInputDataStartColumnIndex; i++)
-                        rowAdded.AppendChild(new Cell());
+        //        var rowObj = listRow.FirstOrDefault(item => item.RowIndex == intInputDataStartRowIndex);
+        //        var cellObj = rowObj.GetFirstChild<Cell>();
+        //        var cellStyleIndex = cellObj.StyleIndex;
+        //        var sheetData = worksheetPart.Worksheet.GetFirstChild<SheetData>();
+        //        foreach (DataRow dataRow in sourceDataTable.Rows)
+        //        {
+        //            var rowAdded = new Row();
+        //            for (int i = 0; i < intInputDataStartColumnIndex; i++)
+        //                rowAdded.AppendChild(new Cell());
 
-                    foreach (DataColumn dataColumn in sourceDataTable.Columns)
-                    {
-                        string strValue = dataRow[dataColumn.ColumnName] as string;
-                        var cell = new Cell();
-                        cell.DataType = CellValues.String;
-                        cell.CellValue = new CellValue(strValue);
-                        cell.StyleIndex = cellStyleIndex;
-                        rowAdded.AppendChild(cell);
-                    }
+        //            foreach (DataColumn dataColumn in sourceDataTable.Columns)
+        //            {
+        //                string strValue = dataRow[dataColumn.ColumnName] as string;
+        //                var cell = new Cell();
+        //                cell.DataType = CellValues.String;
+        //                cell.CellValue = new CellValue(strValue);
+        //                cell.StyleIndex = cellStyleIndex;
+        //                rowAdded.AppendChild(cell);
+        //            }
 
-                    sheetData.InsertBefore(rowAdded, rowObj);
-                }
+        //            sheetData.InsertBefore(rowAdded, rowObj);
+        //        }
 
-                document.SaveAs(strFileSavedPath);
-                document.Close();
-            }
+        //        document.SaveAs(strFileSavedPath);
+        //        document.Close();
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
-        static void ExportToFileByTemplate(string strTemplatePath, string strSheetName, Dictionary<string, string> dicCellPositionValueMapping, DataTable sourceDataTable, int intInputDataStartRowIndex, int intInputDataStartColumnIndex, string strFileSavedPath)
-        {
-            if (string.IsNullOrWhiteSpace(strTemplatePath) || string.IsNullOrWhiteSpace(strSheetName) || string.IsNullOrWhiteSpace(strFileSavedPath))
-                return;
+        //static void ExportToFileByTemplate(string strTemplatePath, string strSheetName, Dictionary<string, string> dicCellPositionValueMapping, DataTable sourceDataTable, int intInputDataStartRowIndex, int intInputDataStartColumnIndex, string strFileSavedPath)
+        //{
+        //    if (string.IsNullOrWhiteSpace(strTemplatePath) || string.IsNullOrWhiteSpace(strSheetName) || string.IsNullOrWhiteSpace(strFileSavedPath))
+        //        return;
 
-            using (var document = SpreadsheetDocument.CreateFromTemplate(strTemplatePath))
-            {
-                var workbookPart = document.WorkbookPart;
-                var workbook = workbookPart.Workbook;
+        //    using (var document = SpreadsheetDocument.CreateFromTemplate(strTemplatePath))
+        //    {
+        //        var workbookPart = document.WorkbookPart;
+        //        var workbook = workbookPart.Workbook;
 
-                var listSheet = workbook.Descendants<Sheet>();
-                var objSheet = listSheet.FirstOrDefault(item => strSheetName.Equals(item.Name, StringComparison.OrdinalIgnoreCase));
-                if (objSheet == null)
-                    return;
+        //        var listSheet = workbook.Descendants<Sheet>();
+        //        var objSheet = listSheet.FirstOrDefault(item => strSheetName.Equals(item.Name, StringComparison.OrdinalIgnoreCase));
+        //        if (objSheet == null)
+        //            return;
 
-                var worksheetPart = workbookPart.GetPartById(objSheet.Id) as WorksheetPart;
-                var listRow = worksheetPart.Worksheet.Descendants<Row>();
-                if (listRow == null || listRow.Count() == 0)
-                    return;
+        //        var worksheetPart = workbookPart.GetPartById(objSheet.Id) as WorksheetPart;
+        //        var listRow = worksheetPart.Worksheet.Descendants<Row>();
+        //        if (listRow == null || listRow.Count() == 0)
+        //            return;
 
-                bool blnResult = ChangeParticularCellValue(listRow, dicCellPositionValueMapping);
-                if (!blnResult)
-                    return;
+        //        bool blnResult = ChangeParticularCellValue(listRow, dicCellPositionValueMapping);
+        //        if (!blnResult)
+        //            return;
 
-                blnResult = ImportDataTable(worksheetPart, listRow, sourceDataTable, intInputDataStartRowIndex, intInputDataStartColumnIndex);
-                if (!blnResult)
-                    return;
+        //        blnResult = ImportDataTable(worksheetPart, listRow, sourceDataTable, intInputDataStartRowIndex, intInputDataStartColumnIndex);
+        //        if (!blnResult)
+        //            return;
 
-                document.SaveAs(strFileSavedPath);
-                document.Close();
-            }
-        }
+        //        document.SaveAs(strFileSavedPath);
+        //        document.Close();
+        //    }
+        //}
 
-        static MemoryStream ExportToFileByTemplate(string strTemplatePath, string strSheetName, Dictionary<string, string> dicCellPositionValueMapping, DataTable sourceDataTable, int intInputDataStartRowIndex, int intInputDataStartColumnIndex)
-        {
-            if (string.IsNullOrWhiteSpace(strTemplatePath) || string.IsNullOrWhiteSpace(strSheetName))
-                return null;
+        //static MemoryStream ExportToFileByTemplate(string strTemplatePath, string strSheetName, Dictionary<string, string> dicCellPositionValueMapping, DataTable sourceDataTable, int intInputDataStartRowIndex, int intInputDataStartColumnIndex)
+        //{
+        //    if (string.IsNullOrWhiteSpace(strTemplatePath) || string.IsNullOrWhiteSpace(strSheetName))
+        //        return null;
 
-            var memoryStream = new MemoryStream();
-            using (var fileStream = new FileStream(strTemplatePath, FileMode.Open, FileAccess.Read))
-                fileStream.CopyTo(memoryStream);
+        //    var memoryStream = new MemoryStream();
+        //    using (var fileStream = new FileStream(strTemplatePath, FileMode.Open, FileAccess.Read))
+        //        fileStream.CopyTo(memoryStream);
 
-            using (var document = SpreadsheetDocument.Open(memoryStream, true))
-            {
-                var workbookPart = document.WorkbookPart;
-                var workbook = workbookPart.Workbook;
+        //    using (var document = SpreadsheetDocument.Open(memoryStream, true))
+        //    {
+        //        var workbookPart = document.WorkbookPart;
+        //        var workbook = workbookPart.Workbook;
 
-                var listSheet = workbook.Descendants<Sheet>();
-                var objSheet = listSheet.FirstOrDefault(item => strSheetName.Equals(item.Name, StringComparison.OrdinalIgnoreCase));
-                if (objSheet == null)
-                    return null;
+        //        var listSheet = workbook.Descendants<Sheet>();
+        //        var objSheet = listSheet.FirstOrDefault(item => strSheetName.Equals(item.Name, StringComparison.OrdinalIgnoreCase));
+        //        if (objSheet == null)
+        //            return null;
 
-                var worksheetPart = workbookPart.GetPartById(objSheet.Id) as WorksheetPart;
-                var listRow = worksheetPart.Worksheet.Descendants<Row>();
-                if (listRow == null || listRow.Count() == 0)
-                    return null;
+        //        var worksheetPart = workbookPart.GetPartById(objSheet.Id) as WorksheetPart;
+        //        var listRow = worksheetPart.Worksheet.Descendants<Row>();
+        //        if (listRow == null || listRow.Count() == 0)
+        //            return null;
 
-                bool blnResult = ChangeParticularCellValue(listRow, dicCellPositionValueMapping);
-                if (!blnResult)
-                    return null;
+        //        bool blnResult = ChangeParticularCellValue(listRow, dicCellPositionValueMapping);
+        //        if (!blnResult)
+        //            return null;
 
-                blnResult = ImportDataTable(worksheetPart, listRow, sourceDataTable, intInputDataStartRowIndex, intInputDataStartColumnIndex);
-                if (!blnResult)
-                    return null;
+        //        blnResult = ImportDataTable(worksheetPart, listRow, sourceDataTable, intInputDataStartRowIndex, intInputDataStartColumnIndex);
+        //        if (!blnResult)
+        //            return null;
 
-                document.Close();
-            }
+        //        document.Close();
+        //    }
 
-            memoryStream.Position = 0;
-            return memoryStream;
-        }
+        //    memoryStream.Position = 0;
+        //    return memoryStream;
+        //}
 
-        static bool ChangeParticularCellValue(IEnumerable<Row> listRow, Dictionary<string, string> dicCellPositionValueMapping)
-        {
-            if (dicCellPositionValueMapping == null || dicCellPositionValueMapping.Count == 0)
-                return true;
+        //static bool ChangeParticularCellValue(IEnumerable<Row> listRow, Dictionary<string, string> dicCellPositionValueMapping)
+        //{
+        //    if (dicCellPositionValueMapping == null || dicCellPositionValueMapping.Count == 0)
+        //        return true;
 
-            foreach (var item in dicCellPositionValueMapping)
-            {
-                string strCellPosition = item.Key;
-                if (string.IsNullOrWhiteSpace(strCellPosition))
-                    return false;
+        //    foreach (var item in dicCellPositionValueMapping)
+        //    {
+        //        string strCellPosition = item.Key;
+        //        if (string.IsNullOrWhiteSpace(strCellPosition))
+        //            return false;
 
-                string strRowIndex = Regex.Replace(strCellPosition, "[a-zA-Z]", "");
-                var targetRow = listRow.FirstOrDefault(row => row.RowIndex.Value.ToString() == strRowIndex);
-                if (targetRow == null)
-                    continue;
+        //        string strRowIndex = Regex.Replace(strCellPosition, "[a-zA-Z]", "");
+        //        var targetRow = listRow.FirstOrDefault(row => row.RowIndex.Value.ToString() == strRowIndex);
+        //        if (targetRow == null)
+        //            continue;
 
-                var listCell = targetRow.Descendants<Cell>();
-                if (listCell == null || listCell.Count() == 0)
-                    return false;
+        //        var listCell = targetRow.Descendants<Cell>();
+        //        if (listCell == null || listCell.Count() == 0)
+        //            return false;
 
-                var targetCell = listCell.FirstOrDefault(cell => string.Equals(strCellPosition, cell.CellReference, StringComparison.OrdinalIgnoreCase));
-                if (targetCell == null)
-                    continue;
+        //        var targetCell = listCell.FirstOrDefault(cell => string.Equals(strCellPosition, cell.CellReference, StringComparison.OrdinalIgnoreCase));
+        //        if (targetCell == null)
+        //            continue;
 
-                string strItemValue = string.IsNullOrWhiteSpace(item.Value) ? "" : item.Value;
-                targetCell.DataType = CellValues.String;
-                targetCell.CellValue = new CellValue(strItemValue);
-            }
+        //        string strItemValue = string.IsNullOrWhiteSpace(item.Value) ? "" : item.Value;
+        //        targetCell.DataType = CellValues.String;
+        //        targetCell.CellValue = new CellValue(strItemValue);
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
-        static bool ImportDataTable(WorksheetPart worksheetPart, IEnumerable<Row> listRow, DataTable sourceDataTable, int intInputDataStartRowIndex, int intInputDataStartColumnIndex, bool blnIsDeleteTempRow = true)
-        {
-            if (sourceDataTable == null || sourceDataTable.Rows.Count == 0)
-                return true;
+        //static bool ImportDataTable(WorksheetPart worksheetPart, IEnumerable<Row> listRow, DataTable sourceDataTable, int intInputDataStartRowIndex, int intInputDataStartColumnIndex, bool blnIsDeleteTempRow = true)
+        //{
+        //    if (sourceDataTable == null || sourceDataTable.Rows.Count == 0)
+        //        return true;
 
-            var rowObj = listRow.FirstOrDefault(item => item.RowIndex == intInputDataStartRowIndex);
-            if (rowObj == null)
-                return false;
+        //    var rowObj = listRow.FirstOrDefault(item => item.RowIndex == intInputDataStartRowIndex);
+        //    if (rowObj == null)
+        //        return false;
 
-            var cellObj = rowObj.GetFirstChild<Cell>();
-            var cellStyleIndex = cellObj.StyleIndex;
-            var sheetData = worksheetPart.Worksheet.GetFirstChild<SheetData>();
-            foreach (DataRow dataRow in sourceDataTable.Rows)
-            {
-                var rowAdded = new Row();
-                for (int i = 1; i < intInputDataStartColumnIndex; i++)
-                    rowAdded.AppendChild(new Cell());
+        //    var cellObj = rowObj.GetFirstChild<Cell>();
+        //    var cellStyleIndex = cellObj.StyleIndex;
+        //    var sheetData = worksheetPart.Worksheet.GetFirstChild<SheetData>();
+        //    foreach (DataRow dataRow in sourceDataTable.Rows)
+        //    {
+        //        var rowAdded = new Row();
+        //        for (int i = 1; i < intInputDataStartColumnIndex; i++)
+        //            rowAdded.AppendChild(new Cell());
 
-                foreach (DataColumn dataColumn in sourceDataTable.Columns)
-                {
-                    string strValue = dataRow[dataColumn.ColumnName] as string;
-                    strValue = string.IsNullOrWhiteSpace(strValue) ? "" : strValue;
-                    var cell = new Cell();
-                    cell.DataType = CellValues.String;
-                    cell.CellValue = new CellValue(strValue);
-                    cell.StyleIndex = cellStyleIndex;
-                    rowAdded.AppendChild(cell);
-                }
+        //        foreach (DataColumn dataColumn in sourceDataTable.Columns)
+        //        {
+        //            string strValue = dataRow[dataColumn.ColumnName] as string;
+        //            strValue = string.IsNullOrWhiteSpace(strValue) ? "" : strValue;
+        //            var cell = new Cell();
+        //            cell.DataType = CellValues.String;
+        //            cell.CellValue = new CellValue(strValue);
+        //            cell.StyleIndex = cellStyleIndex;
+        //            rowAdded.AppendChild(cell);
+        //        }
 
-                sheetData.AppendChild(rowAdded);
-            }
+        //        sheetData.AppendChild(rowAdded);
+        //    }
 
-            if (blnIsDeleteTempRow)
-                sheetData.RemoveChild(rowObj);
+        //    if (blnIsDeleteTempRow)
+        //        sheetData.RemoveChild(rowObj);
 
-            return true;
-        }
+        //    return true;
+        //}
 
         static DataTable CreateDataTable()
         {
@@ -306,43 +306,43 @@ namespace dxStudyOpenXmlExportExcelByTemplate
             return dataTable2;
         }
 
-        static void ZipSingleFile(Stream stream, string strFileName, string strPassword, string strTargetZipFile)
-        {
-            stream.Position = 0;
-            int intLength = (int)stream.Length;
-            byte[] buffer = new byte[intLength];
-            using (stream)
-            {
-                stream.Read(buffer, 0, intLength);
-                stream.Close();
-            }
+        //static void ZipSingleFile(Stream stream, string strFileName, string strPassword, string strTargetZipFile)
+        //{
+        //    stream.Position = 0;
+        //    int intLength = (int)stream.Length;
+        //    byte[] buffer = new byte[intLength];
+        //    using (stream)
+        //    {
+        //        stream.Read(buffer, 0, intLength);
+        //        stream.Close();
+        //    }
 
-            var entry = new ZipEntry(strFileName);
-            entry.DateTime = DateTime.Now;
-            entry.Size = intLength;
+        //    var entry = new ZipEntry(strFileName);
+        //    entry.DateTime = DateTime.Now;
+        //    entry.Size = intLength;
 
-            var zipFileStream = File.Create(strTargetZipFile);
-            using (var zipOut = new ZipOutputStream(zipFileStream))
-            {
-                if (!string.IsNullOrWhiteSpace(strPassword))
-                    zipOut.Password = strPassword;
+        //    var zipFileStream = File.Create(strTargetZipFile);
+        //    using (var zipOut = new ZipOutputStream(zipFileStream))
+        //    {
+        //        if (!string.IsNullOrWhiteSpace(strPassword))
+        //            zipOut.Password = strPassword;
 
-                zipOut.PutNextEntry(entry);
-                zipOut.Write(buffer, 0, intLength);
-                zipOut.CloseEntry();
-                zipOut.Finish();
-                zipOut.Close();
-            }
-        }
+        //        zipOut.PutNextEntry(entry);
+        //        zipOut.Write(buffer, 0, intLength);
+        //        zipOut.CloseEntry();
+        //        zipOut.Finish();
+        //        zipOut.Close();
+        //    }
+        //}
 
-        static void TestGenerateFileByStreamAndZipIt(string strTemplatePath, string strSheetName, Dictionary<string, string> dicCellPositionValueMapping, DataTable sourceDataTable, int intInputDataStartRowIndex, int intInputDataStartColumnIndex, string strFileSavedPath)
-        {
-            var memoryStream = ExportToFileByTemplate(strTemplatePath, strSheetName, dicCellPositionValueMapping, sourceDataTable, intInputDataStartRowIndex, intInputDataStartColumnIndex);
-            if (memoryStream != null)
-            {
-                ZipSingleFile(memoryStream, "dxTestFile.xlsx", "123", strFileSavedPath);
-            }
-        }
+        //static void TestGenerateFileByStreamAndZipIt(string strTemplatePath, string strSheetName, Dictionary<string, string> dicCellPositionValueMapping, DataTable sourceDataTable, int intInputDataStartRowIndex, int intInputDataStartColumnIndex, string strFileSavedPath)
+        //{
+        //    var memoryStream = ExportToFileByTemplate(strTemplatePath, strSheetName, dicCellPositionValueMapping, sourceDataTable, intInputDataStartRowIndex, intInputDataStartColumnIndex);
+        //    if (memoryStream != null)
+        //    {
+        //        ZipSingleFile(memoryStream, "dxTestFile.xlsx", "123", strFileSavedPath);
+        //    }
+        //}
     }
 
     public class QMCOutputColumnName
