@@ -150,6 +150,6 @@ namespace dxStudyOpenXml
 
                 return true;
             }
-        }        
+        }
     }
 }

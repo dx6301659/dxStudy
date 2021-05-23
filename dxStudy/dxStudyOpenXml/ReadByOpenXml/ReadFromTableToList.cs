@@ -6,16 +6,16 @@ using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace dxStudyOpenXml.ReadByOpenXml
+namespace dxStudyOpenXml
 {
     public class ReadFromTableToList : OpenXmlBase
     {
-        public List<T> ReadListFromExcelSheet<T>(string strExcelFilePath, string strSheetName, string strTableName, Dictionary<string, string> dicPropertyNameColumnNameMapping) where T : class, new()
+        public List<T> ReadListFromExcelSheet<T>(string strExcelFilePath, string strSheetName, string strTableName, Dictionary<string, string> dicRecordPropertyNameColumnNameMapping) where T : class, new()
         {
             if (string.IsNullOrWhiteSpace(strExcelFilePath) || string.IsNullOrWhiteSpace(strSheetName) || string.IsNullOrWhiteSpace(strTableName))
                 return null;
 
-            if (dicPropertyNameColumnNameMapping == null || dicPropertyNameColumnNameMapping.Count == 0)
+            if (dicRecordPropertyNameColumnNameMapping == null || dicRecordPropertyNameColumnNameMapping.Count == 0)
                 return null;
 
             using (var document = SpreadsheetDocument.Open(strExcelFilePath, false))
@@ -39,11 +39,11 @@ namespace dxStudyOpenXml.ReadByOpenXml
                 if (listRow == null || listRow.Count() == 0)
                     return null;
 
-                return MakeList<T>(tableDefinitionPart.Table, workbookPart, listRow, dicPropertyNameColumnNameMapping);
+                return MakeList<T>(tableDefinitionPart.Table, workbookPart, listRow, dicRecordPropertyNameColumnNameMapping);
             }
         }
 
-        private List<T> MakeList<T>(Table objTable, WorkbookPart workbookPart, IEnumerable<Row> listRow, Dictionary<string, string> dicPropertyNameColumnNameMapping) where T : class, new()
+        private List<T> MakeList<T>(Table objTable, WorkbookPart workbookPart, IEnumerable<Row> listRow, Dictionary<string, string> dicRecordPropertyNameColumnNameMapping) where T : class, new()
         {
             string strPositions = objTable.Reference.Value;
             string[] arrPositions = strPositions.Split(':');
@@ -58,7 +58,7 @@ namespace dxStudyOpenXml.ReadByOpenXml
             var listColumnCell = columnRow.Descendants<Cell>();
             var dicPropertyPosition = new Dictionary<string, string>();
             var sharedStringTable = workbookPart.SharedStringTablePart.SharedStringTable;
-            foreach (var item in dicPropertyNameColumnNameMapping)
+            foreach (var item in dicRecordPropertyNameColumnNameMapping)
             {
                 if (string.IsNullOrWhiteSpace(item.Key) || string.IsNullOrWhiteSpace(item.Value))
                     continue;
@@ -116,7 +116,7 @@ namespace dxStudyOpenXml.ReadByOpenXml
 
                 var rowIndexpPoperty = type.GetProperty("RowIndex");
                 if (rowIndexpPoperty != null)
-                    rowIndexpPoperty.SetValue(tResult, row.RowIndex.Value);
+                    rowIndexpPoperty.SetValue(tResult, Convert.ChangeType(row.RowIndex.Value, rowIndexpPoperty.PropertyType));
 
                 listResult.Add(tResult);
             }

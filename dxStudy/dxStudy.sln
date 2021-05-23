@@ -13,23 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyQuickSort", "dxStudy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudySelectSort", "dxStudySelectSort\dxStudySelectSort.csproj", "{4B3DE031-FC02-402F-AE89-C7B87CAF1C27}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyOpenXmlReadExcelTable", "dxStudyOpenXmlReadExcelTable\dxStudyOpenXmlReadExcelTable.csproj", "{9028D527-253A-4EA4-ADF9-B62B643E5771}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyOpenXmlReadParticularCell", "dxStudyOpenXmlReadParticularCell\dxStudyOpenXmlReadParticularCell.csproj", "{2F7BD617-09CF-4FE2-BEDE-DB47F4FD4B15}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyOpenXmlReadExcelNameRange", "dxStudyOpenXmlReadExcelNameRange\dxStudyOpenXmlReadExcelNameRange.csproj", "{5DD5536D-0ADC-4E85-9189-8C3F5AB726E2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyOpenXmlChangeCellStyle", "dxStudyOpenXmlChangeCellStyle\dxStudyOpenXmlChangeCellStyle.csproj", "{34EECA9E-5910-4C0E-8E35-8986B6DD22BD}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyOpenXmlExportExcel", "dxStudyOpenXmlExportExcel\dxStudyOpenXmlExportExcel.csproj", "{69529A6F-215A-4002-8C17-D057E7F217A0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyOpenXmlExportExcelByTemplate", "dxStudyOpenXmlExportExcelByTemplate\dxStudyOpenXmlExportExcelByTemplate.csproj", "{F48E928E-8767-41F2-9CC1-3DEDF1958168}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyConvertStringToDateTime", "dxStudyConvertStringToDateTime\dxStudyConvertStringToDateTime.csproj", "{E1A174FE-500B-482B-8EF1-57EE7122114B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dxStudyOpenXml", "dxStudyOpenXml\dxStudyOpenXml.csproj", "{4AB97DDF-4B98-490A-A5D3-28B7AF04AF56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyOpenXml", "dxStudyOpenXml\dxStudyOpenXml.csproj", "{4AB97DDF-4B98-490A-A5D3-28B7AF04AF56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dxStudyZipFile", "dxStudyZipFile\dxStudyZipFile.csproj", "{CE6992A3-76E5-4A35-A34A-C9634B7AC01F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyZipFile", "dxStudyZipFile\dxStudyZipFile.csproj", "{CE6992A3-76E5-4A35-A34A-C9634B7AC01F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,30 +45,6 @@ Global
 		{4B3DE031-FC02-402F-AE89-C7B87CAF1C27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B3DE031-FC02-402F-AE89-C7B87CAF1C27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B3DE031-FC02-402F-AE89-C7B87CAF1C27}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9028D527-253A-4EA4-ADF9-B62B643E5771}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9028D527-253A-4EA4-ADF9-B62B643E5771}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9028D527-253A-4EA4-ADF9-B62B643E5771}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9028D527-253A-4EA4-ADF9-B62B643E5771}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2F7BD617-09CF-4FE2-BEDE-DB47F4FD4B15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2F7BD617-09CF-4FE2-BEDE-DB47F4FD4B15}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2F7BD617-09CF-4FE2-BEDE-DB47F4FD4B15}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2F7BD617-09CF-4FE2-BEDE-DB47F4FD4B15}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5DD5536D-0ADC-4E85-9189-8C3F5AB726E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5DD5536D-0ADC-4E85-9189-8C3F5AB726E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5DD5536D-0ADC-4E85-9189-8C3F5AB726E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5DD5536D-0ADC-4E85-9189-8C3F5AB726E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{34EECA9E-5910-4C0E-8E35-8986B6DD22BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34EECA9E-5910-4C0E-8E35-8986B6DD22BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34EECA9E-5910-4C0E-8E35-8986B6DD22BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{34EECA9E-5910-4C0E-8E35-8986B6DD22BD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{69529A6F-215A-4002-8C17-D057E7F217A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{69529A6F-215A-4002-8C17-D057E7F217A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{69529A6F-215A-4002-8C17-D057E7F217A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{69529A6F-215A-4002-8C17-D057E7F217A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F48E928E-8767-41F2-9CC1-3DEDF1958168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F48E928E-8767-41F2-9CC1-3DEDF1958168}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F48E928E-8767-41F2-9CC1-3DEDF1958168}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F48E928E-8767-41F2-9CC1-3DEDF1958168}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E1A174FE-500B-482B-8EF1-57EE7122114B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E1A174FE-500B-482B-8EF1-57EE7122114B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1A174FE-500B-482B-8EF1-57EE7122114B}.Release|Any CPU.ActiveCfg = Release|Any CPU

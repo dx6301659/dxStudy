@@ -6,7 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace dxStudyOpenXml.ReadByOpenXml
+namespace dxStudyOpenXml
 {
     public class ReadFromTableToDataTable : OpenXmlBase
     {

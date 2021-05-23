@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace dxStudyOpenXml.ReadByOpenXml
+namespace dxStudyOpenXml
 {
     public class ReadSingleObject : OpenXmlBase
     {
@@ -62,7 +62,7 @@ namespace dxStudyOpenXml.ReadByOpenXml
                         return null;
 
                     string strCurrentCellValue = GetCellValue(sharedStringTable, targetCell);
-                    property.SetValue(tResult, strCurrentCellValue);
+                    property.SetValue(tResult, Convert.ChangeType(strCurrentCellValue, property.PropertyType));
                 }
 
                 return tResult;
