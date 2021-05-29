@@ -1,0 +1,29 @@
+USE [dxStudy]
+GO
+
+/****** Object:  Table [dbo].[T_PERSON]    Script Date: 2021/5/29 21:20:07 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[T_PERSON]') AND type in (N'U'))
+DROP TABLE [dbo].[T_PERSON]
+GO
+
+/****** Object:  Table [dbo].[T_PERSON]    Script Date: 2021/5/29 21:20:07 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[T_PERSON](
+	[ID] [varchar](36) NOT NULL,
+	[NAME] [nvarchar](50) NOT NULL,
+	[AGE] [int] NOT NULL,
+	[CREATED_BY] [nvarchar](50) NOT NULL,
+	[CREATED_TIME] [datetime] NOT NULL,
+ CONSTRAINT [PK_T_PERSON] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+

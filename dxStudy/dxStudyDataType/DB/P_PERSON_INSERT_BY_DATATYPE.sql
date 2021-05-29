@@ -1,0 +1,38 @@
+USE [dxStudy]
+GO
+
+/****** Object:  StoredProcedure [dbo].[P_PERSON_INSERT_BY_DATATYPE]    Script Date: 2021/5/29 21:22:05 ******/
+DROP PROCEDURE [dbo].[P_PERSON_INSERT_BY_DATATYPE]
+GO
+
+/****** Object:  StoredProcedure [dbo].[P_PERSON_INSERT_BY_DATATYPE]    Script Date: 2021/5/29 21:22:05 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[P_PERSON_INSERT_BY_DATATYPE]
+(
+	@PersonData DT_T_PERSON READONLY
+)
+AS
+BEGIN
+	INSERT INTO T_PERSON
+		(
+			ID,
+			[NAME],
+			AGE,
+			CREATED_BY,
+			CREATED_TIME
+		)
+		SELECT ID,
+			   [NAME],
+			   AGE,
+			   CREATED_BY,
+			   CREATED_TIME
+		  FROM @PersonData
+END
+GO
+
+
