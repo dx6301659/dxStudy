@@ -41,7 +41,14 @@ namespace dxStudyConvertStringToDateTime
             if (!blnIsParseCorrect)
                 return null;
 
-            return DateTime.FromOADate(dblOADate);
+            try
+            {
+                return DateTime.FromOADate(dblOADate);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
