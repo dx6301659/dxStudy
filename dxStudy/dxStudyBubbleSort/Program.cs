@@ -46,6 +46,12 @@ namespace dxStudyBubbleSort
             int[] arrInt7 = { 12, 5, 2, 1, 3, 6, 9, 8, 7, 0, 11, 13 };
             SortByBubble7(arrInt7);
 
+            Console.WriteLine("**********************************************************7");
+
+            //bubble sort 8
+            int[] arrInt8 = { 12, 5, 2, 1, 3, 6, 9, 8, 7, 0, 11, 13 };
+            SortByBubble8(arrInt8);
+
             Console.Read();
         }
 
@@ -179,6 +185,26 @@ namespace dxStudyBubbleSort
             for (int i = 1; i < intLength; i++)
             {
                 for (int j = 0, k = intLength - i; j < k; j++)
+                {
+                    if (arrInt[j] > arrInt[j + 1])
+                        (arrInt[j], arrInt[j + 1]) = (arrInt[j + 1], arrInt[j]);
+                }
+
+                foreach (var item in arrInt)
+                    Console.Write($"{item}\t");
+                Console.WriteLine();
+            }
+        }
+
+        static void SortByBubble8(int[] arrInt)
+        {
+            if (arrInt == null || arrInt.Length == 0)
+                return;
+
+            int intLenght = arrInt.Length;
+            for (int i = 1; i < intLenght; i++)
+            {
+                for (int j = 0, k = intLenght - i; j < k; j++)
                 {
                     if (arrInt[j] > arrInt[j + 1])
                         (arrInt[j], arrInt[j + 1]) = (arrInt[j + 1], arrInt[j]);
