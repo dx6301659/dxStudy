@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyIOCByAssembly", "dxS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyIOCByAssembly.Contract", "dxStudyIOCByAssembly.Contract\dxStudyIOCByAssembly.Contract.csproj", "{BF10131B-5F7A-413F-9FE5-B683224591C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dxStudyEncoding", "dxStudyEncoding\dxStudyEncoding.csproj", "{9A8E37D1-A8E6-4273-86C8-5951FF55F6A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyEncoding", "dxStudyEncoding\dxStudyEncoding.csproj", "{9A8E37D1-A8E6-4273-86C8-5951FF55F6A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dxStudyRoute", "dxStudyRoute\dxStudyRoute.csproj", "{D1E6A662-6144-4CE3-9BAD-9A0A3F9B969D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{9A8E37D1-A8E6-4273-86C8-5951FF55F6A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A8E37D1-A8E6-4273-86C8-5951FF55F6A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A8E37D1-A8E6-4273-86C8-5951FF55F6A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1E6A662-6144-4CE3-9BAD-9A0A3F9B969D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1E6A662-6144-4CE3-9BAD-9A0A3F9B969D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1E6A662-6144-4CE3-9BAD-9A0A3F9B969D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1E6A662-6144-4CE3-9BAD-9A0A3F9B969D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
