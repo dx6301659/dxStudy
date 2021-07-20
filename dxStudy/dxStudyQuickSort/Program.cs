@@ -86,6 +86,14 @@ namespace dxStudyQuickSort
 
             Console.WriteLine("*******************************************************10");
 
+            //quick sort 11
+            int[] arrInt11 = { 12, 5, 2, 1, 3, 6, 9, 8, 7, 0, 11, 13 };
+            //int[] arrInt11 = { 27, 38, 13, 49, 76, 97, 65 };
+            var quickSort11 = new QuickSort11();
+            quickSort11.QuickSort(arrInt11);
+
+            Console.WriteLine("*******************************************************11");
+
             Console.Read();
         }
     }
@@ -628,6 +636,53 @@ namespace dxStudyQuickSort
             }
 
             foreach (var item in arrInt)
+                Console.Write($"{item}\t");
+            Console.WriteLine();
+
+            return intLeftIndex;
+        }
+    }
+
+    public class QuickSort11
+    {
+        public void QuickSort(int[] arrInt)
+        {
+            if (arrInt == null || arrInt.Length == 0)
+                return;
+
+            QuickSortUnit(arrInt, 0, arrInt.Length - 1);
+        }
+
+        private void QuickSortUnit(int[] arrInt, int intLeftIndex, int intRightIndex)
+        {
+            if (intLeftIndex >= intRightIndex)
+                return;
+
+            //first round
+            int intResult = SortUnit(arrInt, intLeftIndex, intRightIndex);
+
+            //left part
+            QuickSortUnit(arrInt, intLeftIndex, intResult - 1);
+
+            //right part
+            QuickSortUnit(arrInt, intResult + 1, intRightIndex);
+        }
+
+        private int SortUnit(int[] arrInt, int intLeftIndex, int intRightIndex)
+        {
+            int intTag = arrInt[intLeftIndex];
+            while (intLeftIndex < intRightIndex)
+            {
+                while (intLeftIndex < intRightIndex && arrInt[intRightIndex] > intTag)
+                    intRightIndex--;
+                (arrInt[intLeftIndex], arrInt[intRightIndex]) = (arrInt[intRightIndex], arrInt[intLeftIndex]);
+
+                while (intLeftIndex < intRightIndex && arrInt[intLeftIndex] < intTag)
+                    intLeftIndex++;
+                (arrInt[intLeftIndex], arrInt[intRightIndex]) = (arrInt[intRightIndex], arrInt[intLeftIndex]);
+            }
+
+            foreach (int item in arrInt)
                 Console.Write($"{item}\t");
             Console.WriteLine();
 
