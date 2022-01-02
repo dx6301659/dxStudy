@@ -13,4 +13,16 @@ Console.WriteLine($"{strResult1}\t{strResult2}\t{strResult3}");
 
 Console.WriteLine("Hello, World!");
 
+var personData = new Person();
+//personData.Name = "dingxu";
+var a = nameof(personData.Name);
+Console.WriteLine(a);
+
 Console.ReadKey();
+
+
+
+public class Person
+{
+    public string Name => "dx test data";
+}
