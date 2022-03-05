@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloServiceHost", "HelloSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloClient", "HelloClient\HelloClient.csproj", "{3A308061-0ABB-4BCE-8C43-30204ADBB25D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dxStudyElasticSearch", "dxStudyElasticSearch\dxStudyElasticSearch.csproj", "{99A2CEF1-7797-4994-A17D-56A71F736495}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,10 @@ Global
 		{3A308061-0ABB-4BCE-8C43-30204ADBB25D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A308061-0ABB-4BCE-8C43-30204ADBB25D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A308061-0ABB-4BCE-8C43-30204ADBB25D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99A2CEF1-7797-4994-A17D-56A71F736495}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99A2CEF1-7797-4994-A17D-56A71F736495}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99A2CEF1-7797-4994-A17D-56A71F736495}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99A2CEF1-7797-4994-A17D-56A71F736495}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
