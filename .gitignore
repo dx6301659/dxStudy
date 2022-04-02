@@ -58,3 +58,6 @@
 /dxStudy/HelloServiceHost/obj/Debug
 /dxStudy/dxStudyElasticSearch/bin/Debug/net6.0
 /dxStudy/dxStudyElasticSearch/obj
+/dxStudy/dxStudyRedisByAPI/bin/Debug/net6.0
+/dxStudy/dxStudyRedisByAPI/Logs
+/dxStudy/dxStudyRedisByAPI/obj

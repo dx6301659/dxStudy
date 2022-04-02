@@ -41,7 +41,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloServiceHost", "HelloSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloClient", "HelloClient\HelloClient.csproj", "{3A308061-0ABB-4BCE-8C43-30204ADBB25D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dxStudyElasticSearch", "dxStudyElasticSearch\dxStudyElasticSearch.csproj", "{99A2CEF1-7797-4994-A17D-56A71F736495}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyElasticSearch", "dxStudyElasticSearch\dxStudyElasticSearch.csproj", "{99A2CEF1-7797-4994-A17D-56A71F736495}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dxStudyRedisByAPI", "dxStudyRedisByAPI\dxStudyRedisByAPI.csproj", "{AEDB2D78-E027-43C4-8000-5AF064890784}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +131,10 @@ Global
 		{99A2CEF1-7797-4994-A17D-56A71F736495}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99A2CEF1-7797-4994-A17D-56A71F736495}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99A2CEF1-7797-4994-A17D-56A71F736495}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEDB2D78-E027-43C4-8000-5AF064890784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEDB2D78-E027-43C4-8000-5AF064890784}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEDB2D78-E027-43C4-8000-5AF064890784}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEDB2D78-E027-43C4-8000-5AF064890784}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
