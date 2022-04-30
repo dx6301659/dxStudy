@@ -7,7 +7,7 @@ var services = builder.Services;
 
 // ***From dingxu : config Serilog
 Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
-builder.Host.UseSerilog();
+//builder.Host.UseSerilog();
 services.AddLogging(loggingBuilder =>
 {
     loggingBuilder.ClearProviders();
