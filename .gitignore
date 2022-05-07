@@ -61,3 +61,10 @@
 /dxStudy/dxStudyRedisByAPI/bin/Debug/net6.0
 /dxStudy/dxStudyRedisByAPI/Logs
 /dxStudy/dxStudyRedisByAPI/obj
+/dxStudy/dxStudyDistributedRedisCache/bin/Debug/net6.0
+/dxStudy/dxStudyDistributedRedisCache/Logs
+/dxStudy/dxStudyDistributedRedisCache/obj
+/dxStudy/HelloServiceHost/obj/Release
+/dxStudy/HelloService/obj/Release
+/dxStudy/HelloClient/obj/Release
+/dxStudy/dxStudyRoute/obj/Release
