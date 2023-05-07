@@ -71,3 +71,6 @@
 /dxStudy/dxStudyJWT/bin/Debug/net6.0
 /dxStudy/dxStudyJWT/obj
 /dxStudy/.vs/ProjectEvaluation
+/dxStudy/dxStudyYieldReturn/obj
+/dxStudy/dxStudyYieldReturn/bin
+/dxStudy/dxStudyYieldReturn/BenchmarkDotNet.Artifacts

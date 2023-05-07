@@ -47,7 +47,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyRedisByAPI", "dxStud
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyDistributedRedisCache", "dxStudyDistributedRedisCache\dxStudyDistributedRedisCache.csproj", "{5C9A8CF7-0CFD-42A0-8AEC-698938B917C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dxStudyJWT", "dxStudyJWT\dxStudyJWT.csproj", "{BB2B74B2-9AF7-4D32-8D93-3213E4F1F154}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dxStudyJWT", "dxStudyJWT\dxStudyJWT.csproj", "{BB2B74B2-9AF7-4D32-8D93-3213E4F1F154}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dxStudyYieldReturn", "dxStudyYieldReturn\dxStudyYieldReturn.csproj", "{05B2F87C-9A8C-43AA-BA7A-7E417A5C9A95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -147,6 +149,10 @@ Global
 		{BB2B74B2-9AF7-4D32-8D93-3213E4F1F154}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB2B74B2-9AF7-4D32-8D93-3213E4F1F154}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB2B74B2-9AF7-4D32-8D93-3213E4F1F154}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05B2F87C-9A8C-43AA-BA7A-7E417A5C9A95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05B2F87C-9A8C-43AA-BA7A-7E417A5C9A95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05B2F87C-9A8C-43AA-BA7A-7E417A5C9A95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05B2F87C-9A8C-43AA-BA7A-7E417A5C9A95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
